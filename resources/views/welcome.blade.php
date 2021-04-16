@@ -1,4 +1,4 @@
-<x-app-layout>
+ <x-app-layout>
     Hola plaga
 </x-app-layout>
 {{-- <!DOCTYPE html>
