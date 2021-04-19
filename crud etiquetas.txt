@@ -1,0 +1,60 @@
+@@@@@@@@@@
+(cfAcbaL8)13 ***nota convencion de anotacion: (~ significa renglon siguiente)
+lo primero que tendríamos que hacer es crear las siete rutas necesarias para hacer nuestro crud
+-en admin.php creamos la ruta 
+-php artisan make:controller Admin/TagController -r 
+-vamos a importar ese controlador a nuestro archivo de rutas, luego le asignó el control de esa ruta a ese controlador, y como nombre Admin.tag
+ vamos a el controlador e (importamos el modelo TAG)
+-cambiamos el parametro id por (Tag $tag)
+-c/u de los metodos index,create,show,edit (return view('admin.tag.index',xxx); xxx=compact('tag') para edit y show
+-generamos las vistas show,edit,create,index
+*** nota OJO en vez de copiar-- un paso a paso pa segirlo y reproducir el resultado
+-en TagController.php en index()  --$tag = Tag::all();  // recupera kis datos
+-en a) borramos las 2 ultimas seccione de las 5 y en @content --.card ~ table class table ~ table-striped ~ thead.tr.th*3 
+  (1ID,2A,NAME,3colspoan2) y tbody.@foreach.($tags as $tag).tr^td{{$tag->id}}-td{{$tag->name}}-td.<a class="btn btn-primary btn-sm" 
+  href="{{route('a.t.edit',$tag)}}">editar<>-form action="{{route('a.t.s',$tag)}}" method="POST">-@csrf-@method('delete')-buttom 
+  class="btn btn-danger btn=sm" type="submit">Eliminar<  ***nota pa que amvos este a la derecha en td widtn="10px"
+  ***nota error1 undefine $tag cambio a tags pero igual RTO error1a falta ,compact('tags'))  error2 boton editar no aparece RTO faltan class="btn..."
+  error3 no colo po fila rta a)tenia car es card-body b) el @csrf y @method(..) no estaban dentro del form c) tenia stripe y es striped
+- en adminlte.php r 88 'layout_fixed_sidebar' => null, a true (pa que no se mueve sidebar con contenido)
+- colocamos un enlace con forma de boton en la cabeza pa q nos redireccione a admon.tag.crear etiquetas
+  en index.blade.php @section('content-header') <a.class="btn...float-right" href="{{r('a.t.c',)}}>nueva etiqueta<a/>"
+  ***nota en category este boton se puso en @section('content') cin un card-header
+-en create.blade.php  en @section('conten) card~card-body~ (L-collec o (L-c)) form::open(['route'=>'a.t.store'])~div class=from-group~form::leabel('name','Nombre')~
+ ~form::text('name',null,'class'=>'form-control','placeholder'=>'ingerese el nombre de la etiqueta...')~form::colse()
+  ***L-collective a) el mande el @csrf b)si no le decimos el method x defauld es POST
+-duplicamos el div interior pa el slug .:. queda el div~div~form::close ...cambiamos 3 slug por tag y al final q diga slug
+-pegamos el plugin conversor de slug
+-en el input slug (,'readonly')evitar que el usuario pueda cambiar el slug 
+-mostrar un desplegable que permita al user escoger un color -> etiquetas (selct y option)
+ div.class="form-group"~label.for>color:<>~select.name="color" id=" class="form-control>~option*3>a,b,c<
+-boton enviar -> A) form::submit. 'crear etiqueta,['class'=>'...} B)en TagController.php store() return $request->all(); 
+ le pedimos q nos retur lo que se esta mandando por el formulario 
+-select con collective form::label.'color','color:'~form::select.('color',$colors,null,['class'=>'form-control']  yyyy en TagController.php en create() $colors=['red'=>'color rojo',....] y ,compact('color')); 
+-@27:26 en store(){ $request->validation(['name=>'required',y a slug|unique:tags, y a color ]),    // reglas de validacion
+ B)en edit.blade.php //debajo de c/u input los posibles errores de validacion.   mostramos en 
+***nota pregunto si existe algún error de validación en el campo name en el caso de que lo hubiera vamos a poner dentro de una etiqueta small el mensaje
+-@error('name')<small class="text-danger>{{$message}}<
+-igual en slug
+-again en TagController.php en store() si pasa la regla de validacion  -> me cree un new etiqueta $tag = Tag::create($request->all()); //le pasamos la informacion q estamos enviando desde el formulario con ($request->all())
+ luego return redirect()->route('a.ts.e',c)//;le pasamos como parametro ,compact('tag');
+-protected fillable = ['name','slug','color'] //habilitar asignacion masiba en TagModels.php
+ error1 validation no validate error2 tenia redirect('a.ts....) era redirect()->route('a.ts....
+-en edit() div.card~div.card-body~form::model.$tag.'route'=>'route.tags.update' //1er paramt variable del registro q queremos actuali. 2o pamtro la 
+ ruta y need a pamtro .:. ['ruta',pamtro $tag] y es con .:.['route'=>['a.t.u',$t],'method '=>'put']~form::close 
+ ***nota y adentro todos los campos BUT BUT fastidoso =>
+-@33:03partials creamos carpeta y vista resources\views\admin\tags\partials\form.blade.php 2o) cortamos el form 29 renglone de create y copy en new
+ 3o)incluimos el contenido de form.blade.php en create.blade.php mediante @include('name') //debemos pasarle la ruta relativa a la carpeta view
+ o sea @include('admin.tags.partials.form') y too copy en edit.blade.php B)nos dara un ERROR xq la $color solo esta en creat() -> la copy y la
+ pegarla en edit() y pasarsela ala vista ojo error xq no cuide que ya estaba pasando 'tag' y lo borre 
+-en edit() form::submit.class'=>'btn btn-primay//debajo de los input ponemos un boton y al dar clic la info se ira a admin.tags.update
+-TagController.php upsate() A) ponemos regla de validation, lo copiamos como esta en store()  yyyy B) sabemos que slug da problema => le traemos el 
+ arreglo add ,slug,$tag->id" ojo " al  ini C) si pasa la regla de validacion, $tag->update($request->all()) //le paso la inf que se esta enviando 
+ desde el form $request->all(); D) yy return redirect()->route('a.t.e',$tag)->  //le pasamos la info de la etiqueta $tag y va con un mensaje de session 
+ E)->with('info','exito en etique edit') Ea) copiamos el info desde edit de category
+ F) y copiamos el puglin del slug borrando @section('js')
+ 4o) mostrar el mensaaje too al crear la etiqueta  a) pegar en tag/create.blade.php debajo de @conten b) 
+-destroy() a)  $tag->delete(); b)  return redirect()->route('admin.tags.index')->with('info','la etiqueta se borro bien');  c) en incex @if (session('info'))....
+ error 1 en eliminar estaba store y debe ser destroy
+-que se envie el slug y no el id en tagMpdels.php 
+-pinte de azul el boton de etiquetas no solo caundo esta en index sino too en edit en adminlte.php r252 add  'active' => ['admin/tags*'] a 'route'  => 'admin.tags.index',
