@@ -29,6 +29,10 @@
 @stop
 
 @section('js')
+    <script> console.log('Hi!'); </script>
+@stop
+
+@section('js')
     <script src="{{asset('vendor/jQuery-Plugin-stringToSlug-1.3/jquery.stringToSlug.min.js')}}"></script>
     <script>
                 $(document).ready( function() {
