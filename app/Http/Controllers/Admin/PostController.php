@@ -8,6 +8,8 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -38,14 +40,20 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorepOSTRequest $request)
+    public function store(StorePostRequest $request)
     {
         $post = Post::create($request->all());
+        if ( $request->file('file')) {
+            $url = Storage::put('posts', $request->file('file'));
+
+            $post->imagen()->create([
+                'url' => $url
+            ]);
+        }
         if($request->tags){
             $post->tags()->attach($request->tags);
-        }
+        }  
         return redirect()->route('admin.posts.edit', $post);
-        // $color = ['red'=>'color rojo','blue'=>'color azul'];
     }
 
     /**
