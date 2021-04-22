@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\PostRequest;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +18,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()  {      return view('admin.posts.index');
+    public function index()
+    {
+        return view('admin.posts.index');
     }
 
     /**
@@ -26,12 +28,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {    
-        $categories = Category::pluck('name','id'); 
-        $tags = Tag::all(); 
+    public function create()
+    {
+        $categories = Category::pluck('name', 'id');
+        $tags = Tag::all();
         // $color = ['red'=>'color rojo','blue'=>'color azul'];
         // return $posts;
-        return view('admin.posts.create',compact('categories','tags'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -40,19 +43,19 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(PostRequest $request)
     {
         $post = Post::create($request->all());
-        if ( $request->file('file')) {
+        if ($request->file('file')) {
             $url = Storage::put('posts', $request->file('file'));
 
             $post->imagen()->create([
                 'url' => $url
             ]);
         }
-        if($request->tags){
+        if ($request->tags) {
             $post->tags()->attach($request->tags);
-        }  
+        }
         return redirect()->route('admin.posts.edit', $post);
     }
 
@@ -62,7 +65,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)  {  return view('admin.posts.show',compact('post'));
+    public function show(Post $post)
+    {
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -71,7 +76,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post) {    return view('admin.posts.edit',compact('post'));
+    public function edit(Post $post)
+    {
+        $categories = Category::pluck('name', 'id');
+        $tags = Tag::all();
+        // $post = Post::create($request->all());
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -81,9 +91,29 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        $post->update($request->all());
+
+        if ($request->file('file')) {
+            $url = Storage::put('posts', $request->file('file'));
+
+            if ($post->imagen) {
+                Storage::delete($post->imagen->url);
+
+                $post->imagen->update([
+                    'url' => $url
+                ]);
+            } else {
+                $post->imagen->create([
+                    'url' => $url
+                ]);
+            }
+        }
+        // if ($request->tags) {
+        //     $post->tags()->sync($request->tags);
+        // }
+        return redirect()->route('admin.posts.edit', $post)->with('info', 'el post se actualizo bien');
     }
 
     /**
