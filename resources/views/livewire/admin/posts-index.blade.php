@@ -3,8 +3,12 @@
         <div class="card-header">
             <input wire:model="search" class="form-control px-8 py-8" placeholder="ingrece el post" >
         </div>
-
     @if ($posts->count())
+    {{-- @if (session('info'))
+        <div class="alert alert-success">
+            <strong>{{session('info')}}</strong>
+        </div>
+    @endif --}}
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
