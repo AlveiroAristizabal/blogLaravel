@@ -232,27 +232,44 @@ return [
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            // 'can'  => 'manage-blog',
         ],
         [
             'text'        => 'AdminControl',//'Dashboard',
             'url'         => 'admin',
             'icon'        => 'fas fa-tachometer-alt fa-fw', //far fa-fw fa-file',
+            'can'       => 'admin.home',
             // 'label'       => 4,
             // 'label_color' => 'success',
         ],
-        ['header' => 'ADMINISTRADOR'],
+        [
+            'text' => 'Usuarios',
+            'route'  => 'admin.users.index', //'url'  => 'admin/settings',
+            'icon' => 'fas fa-users fa-fw ',
+            'active' => ['admin/users*'],
+            'can'       => 'admin.users.index',
+        ],
+        [
+            'text' => 'Lista de roles',
+            'route'  => 'admin.roles.index', //'url'  => 'admin/settings',
+            'icon' => 'fas fa-users-cog fa-fw ',
+            // 'active' => ['admin/users*'],
+            // 'can'       => 'admin.roles.index',
+        ],
+        // ['header' => 'ADMINISTRADOR'],
         [
             'text' => 'Categorias',
             'route'  => 'admin.categories.index', //'url'  => 'admin/settings',
             'icon' => 'fab fa-fw fa-buffer',
             'active' => ['admin/categories*'],
+            'can'       => 'admin.categories.index',
         ],
         [
             'text' => 'Etiquetas',
             'route'  => 'admin.tags.index', //'url'  => 'admin/settings',
             'icon' => 'far fa-fw fa-bookmark', //'fas fa-fw fa-lock'
             'active' => ['admin/tags*'],
+            'can'       => 'admin.tags.index',
         ],
         ['header' => 'OPCIONES DE BLOG'],
         [
@@ -260,12 +277,14 @@ return [
             // 'icon_color' => 'red',
             'route'        => 'admin.posts.index',
             'icon'         => 'fas fa-fw fa-clipboard',
+            'can'       => 'admin.posts.index',
         ],
         [
             'text'       => 'Crear nuevo post',
             // 'icon_color' => 'yellow',
             'route'        => 'admin.posts.create',
             'icon'         => 'fas fa-fw fa-file',
+            'can'       => 'admin.posts.create',
         ],
 
     ],

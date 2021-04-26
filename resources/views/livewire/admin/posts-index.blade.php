@@ -42,7 +42,7 @@
             {{$posts->links()}}
         </div>
     @else
-        <div class="card">
+        <div class="card-body">
             <strong>No hay registros</strong>
         </div>
     @endif

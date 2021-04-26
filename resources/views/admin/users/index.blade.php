@@ -3,11 +3,15 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Mostrar Detalle Post</h1>
+<a class="btn btn-secondary btn-sm float-right" href="">Nuevo Usuario</a> 
+{{-- {{route('admin.users.create')}} --}}
+<h1>Listado de Usuarios</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    @livewire('admin.users-index')
+    {{-- @livewire('admin.posts-index')     --}}
+
 @stop
 
 @section('css')

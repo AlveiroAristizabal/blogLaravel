@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
           'name'=>'z',
           'email' => 'z@z.com',
           'password' => bcrypt('zzzzzzzz') 
-       ]);
-        User::factory(9)->create();
+       ])->assignRole('Admin'); //podemos $role o el name del rol Admin
+        User::factory(99)->create();
        
     }
 }
