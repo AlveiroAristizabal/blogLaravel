@@ -11,7 +11,16 @@ use Illuminate\Support\Facades\Cache;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::where ('status', 2)->latest('id')->paginate(8); //get();
+        if (request()->page){
+            $key = 'posts' .request()->page;
+        }else {             $key = 'posts';             }
+
+        if (Cache::has($key)){
+            $posts = Cache::get($key);
+        }else {
+            $posts = Post::where ('status', 2)->latest('id')->paginate(8); //get();
+            Cache::put($key, $posts);
+        }
         return view('posts.index', compact('posts'));
     }
     public function show (Post $post){

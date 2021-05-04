@@ -3,12 +3,15 @@
         <h1 class="text-4xl font-bold text--gray-600">
             {{$post->name}}
         </h1>
-        <div class="text-lg  text--gray-400">
+        <div class="text-lg  text--gray-500 mb-2">
             {!!$post->extract!!}
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {{--  lg: --}}
             {{-- contenido principal --}}
-            <div class="lg:col-span-2">
+            <div class="lg:col-span-2"> 
+                {{-- col-span-2 --}}
+
                 <figure>
                     @if ($post->imagen)
                     <img class="w-full h-80 object-cover object-center" src="{{Storage::url($post->imagen->url)}}" alt="">
@@ -23,21 +26,24 @@
             </div>
             {{-- contenido relacionado --}}
             <aside>
-                <h1 class="text-2xl font-bold text-grey-500 mb-4">Mas en {{$post->category->name}}</h1>
-                <ul>
-                    @foreach ($similares as $similar)
-                    <li class="mb-4">
-                        <a class="flex" href="{{route('posts.show', $similar)}}">
-                            @if ($similar->imagen)
-                            <img class="w-36 h-20 object-cover object-center" src="{{Storage::url($similar->imagen->url)}}" alt="">
+                {{-- <span> --}}
+
+                    <h1 class="text-2xl font-bold text-grey-600 mb-4">Mas en {{$post->category->name}}</h1>
+                    <ul>
+                        @foreach ($similares as $similar)
+                        <li class="mb-4">
+                            <a class="flex" href="{{route('posts.show', $similar)}}">
+                                @if ($similar->imagen)
+                            <img class="w-36  h-20 object-cover object-center" src="{{Storage::url($similar->imagen->url)}}" alt="">
                             @else
-                            <img class="w-36 h-20 object-cover object-center" src="https://cdn.pixabay.com/photo/2020/08/09/15/44/tower-5475850__340.jpg" alt="">
+                            <img class="w-36  h-20 object-cover object-center" src="https://cdn.pixabay.com/photo/2020/08/09/15/44/tower-5475850__340.jpg" alt="">
                             @endif 
-                            <span class="ml-2 text-gray-600">{{$similar->name}}</span>
+                            <span class="ml-2 text-gray-600" >{{$similar->name}}</span>
                         </a>
                     </li>
                     @endforeach
                 </ul>
+            {{-- </span> --}}
             </aside>
 
         </div>
