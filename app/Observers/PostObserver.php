@@ -13,8 +13,8 @@ class PostObserver
     }
     function deleting (Post $post)
     {
-        if ($post->imagen) {
-            Storage::delete($post->imagen->url);
+        if ($post->image) {  //alv imagen
+            Storage::delete($post->image->url); //alv imagen
         }
     }
 }
