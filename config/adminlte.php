@@ -230,13 +230,9 @@ return [
             'search' => true,
             'topnav' => true,
         ],
+
         [
-            // 'text' => 'blog',
-            // 'url'  => 'admin/blog',
-            // 'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'Tablero de Control',//'Dashboard',
+            'text'        => 'Tablero de Control',
             'url'         => 'admin',
             'icon'        => 'fas fa-tachometer-alt fa-fw', //far fa-fw fa-file',
             'can'       => 'admin.home',
@@ -272,7 +268,6 @@ return [
             'active' => ['admin/tags*'],
             'can'       => 'admin.tags.index',
         ],
-        // ['header' => 'OPCIONES DE BLOG'],
         [
             'text'       => 'lista de post',
             // 'icon_color' => 'red',
