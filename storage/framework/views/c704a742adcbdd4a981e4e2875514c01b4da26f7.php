@@ -1,13 +1,13 @@
 
 
-<?php $__env->startSection('title', 'Dashboard'); ?>
+<?php $__env->startSection('title', 'Tablero control'); ?>
 
 <?php $__env->startSection('content_header'); ?>
-    <h1>Dashboard</h1>
+    <h1>Tablero de control</h1>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <p>Welcome to this beautiful admin panel.</p>
+    <p>Bien venido al tablero de control.</p>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
