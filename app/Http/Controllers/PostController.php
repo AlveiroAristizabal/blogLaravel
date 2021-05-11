@@ -6,21 +6,26 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Support\Facades\Cache; 
+use Livewire\WithPagination;
+
 
 class PostController extends Controller
 {
     public function index(){
-        if (request()->page){
-            $key = 'posts' .request()->page;
-        }else {             $key = 'posts';             }
+        // if (request()->page){
+        //     $key = 'posts' .request()->page;
+        // }else {             $key = 'posts';             }
 
-        if (Cache::has($key)){
-            $posts = Cache::get($key);
-        }else {
-            $posts = Post::where ('status', 2)->latest('id')->paginate(8); //get();
-            Cache::put($key, $posts);
-        }
+        // if (Cache::has($key)){
+        //     $posts = Cache::get($key);
+        // }else {
+        //     $posts = Post::where ('status', 2)->latest('id')->paginate(8); //get();
+        //     Cache::put($key, $posts);
+        // }
+            $posts = Post::where ('status', 2)  ->latest('id')->paginate(8); //get();
+            // $posts = Post::where ('status', 2)->latest('id')->paginate(8); //get();
         return view('posts.index', compact('posts'));
     }
     public function show (Post $post){
