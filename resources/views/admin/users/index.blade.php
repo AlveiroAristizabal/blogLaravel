@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<a class="btn btn-secondary btn-sm float-right" href="">Nuevo Usuario</a> 
+{{-- <a class="btn btn-secondary btn-sm float-right" href="">Nuevo Usuario</a>  --}}
 
 {{-- {{route('admin.users.create')}} --}}
 <h1>Listado de usuarios</h1>
