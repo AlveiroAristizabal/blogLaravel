@@ -2,7 +2,7 @@
     <div class="container py-8 ">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">                                                 
             @foreach ($posts as $post)
-            <div>
+            {{-- <div>
                 {{$post->imagen->url}}
                 {{Storage::url($post->imagen->url)}}
                 @foreach ($post->tags as $tag)
@@ -15,8 +15,8 @@
             </a>
         </h1>
 
-            </div>
-            {{-- <article class="w-full h-80 bg-cover bg-center @if ($loop->first) md:col-span-2 @endif"                 
+            </div> --}}
+            <article class="w-full h-80 bg-cover bg-center @if ($loop->first) md:col-span-2 @endif"                 
                 style="background-image: url(@if ($post->imagen){{Storage::url($post->imagen->url)}}@else https://cdn.pixabay.com/photo/2020/08/09/15/44/tower-5475850__340.jpg @endif)">
                 <div class="w-full h-full px-8  flex flex-col justify-center">
                     {{$post->imagen->url}}
@@ -32,7 +32,7 @@
                     </a>
                 </h1>
             </div>
-            </article> --}}
+            </article>
             @endforeach
         </div>
         {{-- paginacion --}}
