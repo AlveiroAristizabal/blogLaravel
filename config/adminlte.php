@@ -250,8 +250,8 @@ return [
             'text' => 'Lista de roles',
             'route'  => 'admin.roles.index', //'url'  => 'admin/settings',
             'icon' => 'fas fa-users-cog fa-fw ',
-            // 'active' => ['admin/users*'],
-            // 'can'       => 'admin.roles.index',
+            'active' => ['admin/users*'],
+            'can'       => 'admin.roles.index',
         ],
         // ['header' => 'ADMINISTRADOR'],
         [

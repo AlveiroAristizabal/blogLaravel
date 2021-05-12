@@ -3,7 +3,9 @@
 <?php $__env->startSection('title', 'Dashboard'); ?>
 
 <?php $__env->startSection('content_header'); ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin.roles.create')): ?>
 <a class="btn btn-secondary btn-sm float-right" href="<?php echo e(route('admin.roles.create')); ?>">Nuevo Rol</a> 
+<?php endif; ?>
     <h1>Lista de roles</h1>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
@@ -29,15 +31,19 @@
                         <td><?php echo e($role->id); ?></td>
                         <td><?php echo e($role->name); ?></td>
                         <td width='10px'>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin.roles.edit')): ?>
                             <a class="btn btn-primary" href="<?php echo e(route('admin.roles.edit', $role)); ?>">editar</a>
+                            <?php endif; ?>
                         </td>
                         <td width='10px'>
-                            <form action="<?php echo e(route('admin.roles.destroy',$role)); ?>" method="POST">
-                                <?php echo csrf_field(); ?>
-                                <?php echo method_field('DELETE'); ?>
-                                
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin.roles.destroy')): ?>
+                                <form action="<?php echo e(route('admin.roles.destroy',$role)); ?>" method="POST">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
+                                    
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            <?php endif; ?>
                             
                         </td>
                     </tr>
